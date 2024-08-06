@@ -1,0 +1,26 @@
+version: "3.6"
+services:
+ license:
+  image: "totvsengpro/license-dev"
+
+ postgres-iniciado:
+  image: "totvsengpro/postgres-dev:12.1.2310_bra"
+  ports:
+    - "5432:5432"
+ dbaccess-postgres:
+  image: "totvsengpro/dbaccess-postgres-dev"
+  volumes:
+    - "./dbaccess.ini:/opt/totvs/dbaccess/multi/dbaccess.ini"
+  ports:
+    - "7890:7890"
+ appserver:
+  image: "totvsengpro/appserver-dev"
+  volumes:
+    - "./appserver.ini:/opt/totvs/appserver/appserver.ini"
+    - "./rpo/tttm120.rpo:/opt/totvs/protheus/apo/tttm120.rpo"
+    - "./dicionario/sx2.unq:/opt/totvs/protheus/protheus_data/systemload/sx2.unq"
+    - "./dicionario/sxsbra.txt:/opt/totvs/protheus/protheus_data/systemload/sxsbra.txt"
+  ports:
+    - "1234:1234"
+    - "8080:8080"
+    - "8081:8081"
